@@ -1,4 +1,5 @@
 <template>
+    <!-- 상단바 코드 -->
     <nav class="navbar navbar-expand-lg bg-topBar">
         <div class="container-fluid">
             <a class="navbar-brand" href="#"><img src="./assets/shopping.png" width="30" height="30" /> 아는 사람만 아는 쇼핑몰</a>
