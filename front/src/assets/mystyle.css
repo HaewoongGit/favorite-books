@@ -1,3 +1,9 @@
 .bg-topBar {
     background-color: #e3f2fd;
 }
+
+.wrap {
+    width: 80%;
+    max-width: 700px;
+    margin: 10px auto;
+}
