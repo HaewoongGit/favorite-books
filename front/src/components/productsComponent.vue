@@ -1,17 +1,17 @@
 <template>
-    <div id="goodsList" class="mb-5">
-        <div class="card mb-2" onclick="location.href='#'">
-            <div class="row no-gutters">
-                <div class="col-sm-5" style="background: #868e96">
-                    <img :src="good.thumbnailUrl" class="card-img-top h-100" alt="..." />
+    <div @click="$router.push(`/detail/${i}`)" id="goodsList" class="mb-3">
+        <div class="card mb-1" onclick="location.href='#'">
+            <div class="row g-0">
+                <div class="col-md-4" style="background: #868e96">
+                    <img :src="good.thumbnailUrl" class="img-fluid rounded-start" alt="..." />
                 </div>
-                <div class="col-sm-7 d-flex">
-                    <div class="card-body flex-fill">
-                        <div class="card-title mb-auto">
-                            <h5 style="display: inline">{{ good.name }}</h5>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h5>{{ good.name }}</h5>
                             <span class="card-price ml-2">${{ good.price }}</span>
                         </div>
-                        <span class="badge badge-secondary">{{ good.category }}</span>
+                        <span class="badge text-bg-secondary">{{ good.category }}</span>
                     </div>
                 </div>
             </div>
@@ -23,6 +23,7 @@
 export default {
     props: {
         good: Object,
+        i: Number,
     },
 };
 </script>
