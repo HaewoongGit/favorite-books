@@ -1,5 +1,12 @@
 <template>
-    <div @click="$router.push(`/detail/${i}`)" id="goodsList" class="mb-3">
+    <div
+        @click="
+            $router.push(`/detail/${i}`);
+            goodsDetail(i + 1);
+        "
+        id="goodsList"
+        class="mb-3"
+    >
         <div class="card mb-1" onclick="location.href='#'">
             <div class="row g-0">
                 <div class="col-md-4" style="background: #868e96">
@@ -20,10 +27,15 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
     props: {
         good: Object,
         i: Number,
+    },
+
+    computed: {
+        ...mapActions(["goodsDetail"]),
     },
 };
 </script>

@@ -2,13 +2,13 @@
     <div class="wrap">
         <div class="row no-gutters">
             <div class="col-sm-5">
-                <img :src="goods[$route.params.id].thumbnailUrl" class="card-img-top h-100" alt="..." id="goodsUrl" />
+                <img :src="detail.thumbnailUrl" class="card-img-top h-100" alt="..." id="goodsUrl" />
             </div>
             <div class="col-sm-7 card-body px-3">
                 <div class="flex-fill mt-3">
                     <div class="d-flex justify-content-between mb-3">
-                        <h5 style="display: inline" id="goodsName">{{ goods[$route.params.id].name }}</h5>
-                        <span class="card-price" id="goodsPrice">{{ goods[$route.params.id].price }}</span>
+                        <h5 style="display: inline" id="goodsName">{{ detail.name }}</h5>
+                        <span class="card-price" id="goodsPrice">{{ detail.price }}</span>
                     </div>
 
                     <div class="form-group row mr-0">
@@ -49,7 +49,7 @@ export default {
         };
     },
     computed: {
-        ...mapState(["goods"]),
+        ...mapState(["detail"]),
     },
 };
 </script>

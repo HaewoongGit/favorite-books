@@ -14,11 +14,16 @@
 
 <script>
 import productsComponent from "./productsComponent.vue";
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 export default {
     components: { productsComponent },
     computed: {
         ...mapState(["goods"]),
+        ...mapActions(["goodsList"]),
+    },
+
+    beforeMount() {
+        this.goodsList;
     },
 };
 </script>

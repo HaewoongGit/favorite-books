@@ -4,5 +4,5 @@ module.exports = defineConfig({
 });
 
 module.exports = {
-    outputDir: "../back/public/view",
+    outputDir: "../back/public",
 };
