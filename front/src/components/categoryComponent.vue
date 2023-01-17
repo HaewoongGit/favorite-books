@@ -2,7 +2,7 @@
     <div class="wrap">
         <div class="form-group row mb-3">
             <label for="categorySelect" class="col-form-label w-25">카테고리</label>
-            <select class="form-select w-75" id="categorySelect">
+            <select @change="goodsList($event.target.value)" class="form-select w-75" id="categorySelect">
                 <option value="" selected>전체</option>
                 <option value="drink">음료</option>
                 <option value="food">음식</option>
@@ -19,11 +19,13 @@ export default {
     components: { productsComponent },
     computed: {
         ...mapState(["goods"]),
-        ...mapActions(["goodsList"]),
     },
 
+    methods: { ...mapActions(["goodsList"]) },
+
     beforeMount() {
-        this.goodsList;
+        // console.log("카테고리", typeof this.category);
+        this.goodsList(this.category);
     },
 };
 </script>

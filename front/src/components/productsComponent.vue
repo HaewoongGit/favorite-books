@@ -1,8 +1,8 @@
 <template>
     <div
         @click="
-            goodsDetail(i + 1);
-            $router.push(`/detail/${i}`);
+            goodsDetail(this.good.goodsId);
+            $router.push(`/detail/${good.goodsId}`);
         "
         id="goodsList"
         class="mb-3"
@@ -10,7 +10,7 @@
         <div class="card mb-1" onclick="location.href='#'">
             <div class="row g-0">
                 <div class="col-md-4" style="background: #868e96">
-                    <img :src="good.thumbnailUrl" class="img-fluid rounded-start" alt="..." />
+                    <img id="goodsUrl" :src="good.thumbnailUrl" class="img-fluid rounded-start" alt="..." />
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
@@ -33,10 +33,6 @@ export default {
         good: Object,
         i: Number,
     },
-
-    // computed: {
-    //     ...mapState(["detail"]),
-    // },
     methods: {
         ...mapActions(["goodsDetail"]),
     },

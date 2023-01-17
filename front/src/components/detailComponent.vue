@@ -2,13 +2,13 @@
     <div class="wrap">
         <div class="row no-gutters">
             <div class="col-sm-5">
-                <img :src="detail.thumbnailUrl" class="card-img-top h-100" alt="..." id="goodsUrl" />
+                <img :src="detail.thumbnailUrl" alt="..." id="goodsUrl" />
             </div>
             <div class="col-sm-7 card-body px-3">
                 <div class="flex-fill mt-3">
                     <div class="d-flex justify-content-between mb-3">
                         <h5 style="display: inline" id="goodsName">{{ detail.name }}</h5>
-                        <span class="card-price" id="goodsPrice">{{ detail.price }}</span>
+                        <span class="card-price" id="goodsPrice">${{ detail.price }}</span>
                     </div>
 
                     <div class="form-group row mr-0">
@@ -25,7 +25,9 @@
                     <div class="row mb-3">
                         <div class="col-5">총 상품금액</div>
                         <div class="col-7 text-right" id="orderNumber">
-                            <small class="mr-2 text-muted">총 수량 {{ quantity }}개 </small>&nbsp; ${{ (goods[$route.params.id].price * quantity).toFixed(1) }}
+                            <small class="mr-2 text-muted">총 수량 {{ quantity }}개 </small>&nbsp; ${{
+                                (detail.price * quantity).toFixed(1)
+                            }}
                         </div>
                     </div>
                     <div class="d-flex justify-content-around">
@@ -39,7 +41,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState } from "vuex";
 export default {
     data() {
         return {
@@ -48,12 +50,6 @@ export default {
     },
     computed: {
         ...mapState(["detail"]),
-    },
-    methods: {
-        ...mapActions(["goodsDetail"]),
-    },
-    beforeMount() {
-        console.log("디테일 컴포넌트에서 불러온 디테일 데이터1234", this.detail);
     },
 };
 </script>

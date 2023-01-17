@@ -27,21 +27,22 @@ const store = createStore({
 
         setDetail(state, detail) {
             state.detail = detail;
-            console.log("state안의 디테일은 이렇게 바뀌었다.", state.detail);
         },
     },
 
     actions: {
-        goodsList(context) {
-            axios.get("http://localhost:3000/api/goods").then((res) => {
+        goodsList(context, payload) {
+            console.log("페이로드", payload);
+            axios.get(`http://localhost:3000/api/goods${payload ? "?category=" + payload : ""}`).then((res) => {
+                // axios.get(`http://localhost:3000/api/goods`).then((res) => {
+                console.log("받아온 상품 데이터", res.data.goods);
                 context.commit("setGoods", res.data.goods);
             });
         },
 
         goodsDetail(context, payload) {
+            console.log("디테일 페이로드", payload);
             axios.get(`http://localhost:3000/api/goods/${payload}`).then((res) => {
-                console.log("store.js 서버에서 받아온 데이터", res.data.detail);
-                console.log("store.js 서버에서 받아온 데이터의 타입", typeof (res.data.detail));
                 context.commit("setDetail", res.data.detail);
             });
         },
