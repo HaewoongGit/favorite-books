@@ -21,7 +21,9 @@ export default {
         ...mapState(["goods"]),
     },
 
-    methods: { ...mapActions(["goodsList"]) },
+    methods: {
+        ...mapActions(["goodsList"]),
+    },
 
     beforeMount() {
         // console.log("카테고리", typeof this.category);
