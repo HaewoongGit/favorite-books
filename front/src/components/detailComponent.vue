@@ -25,9 +25,7 @@
                     <div class="row mb-3">
                         <div class="col-5">총 상품금액</div>
                         <div class="col-7 text-right" id="orderNumber">
-                            <small class="mr-2 text-muted">총 수량 {{ quantity }}개 </small>&nbsp; ${{
-                                (goods[$route.params.id].price * quantity).toFixed(1)
-                            }}
+                            <small class="mr-2 text-muted">총 수량 {{ quantity }}개 </small>&nbsp; ${{ (goods[$route.params.id].price * quantity).toFixed(1) }}
                         </div>
                     </div>
                     <div class="d-flex justify-content-around">
@@ -41,7 +39,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
     data() {
         return {
@@ -50,6 +48,12 @@ export default {
     },
     computed: {
         ...mapState(["detail"]),
+    },
+    methods: {
+        ...mapActions(["goodsDetail"]),
+    },
+    beforeMount() {
+        console.log("디테일 컴포넌트에서 불러온 디테일 데이터1234", this.detail);
     },
 };
 </script>

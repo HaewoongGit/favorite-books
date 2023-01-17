@@ -26,8 +26,8 @@ const store = createStore({
         },
 
         setDetail(state, detail) {
-            console.log("띠로리~~~", detail);
             state.detail = detail;
+            console.log("state안의 디테일은 이렇게 바뀌었다.", state.detail);
         },
     },
 
@@ -38,10 +38,10 @@ const store = createStore({
             });
         },
 
-        goodsDetail({ context }, data) {
-            console.log("실행은 되냐?");
-            console.log(data);
-            axios.get(`http://localhost:3000/api/goods/${data}`).then((res) => {
+        goodsDetail(context, payload) {
+            axios.get(`http://localhost:3000/api/goods/${payload}`).then((res) => {
+                console.log("store.js 서버에서 받아온 데이터", res.data.detail);
+                console.log("store.js 서버에서 받아온 데이터의 타입", typeof (res.data.detail));
                 context.commit("setDetail", res.data.detail);
             });
         },

@@ -1,8 +1,8 @@
 <template>
     <div
         @click="
-            $router.push(`/detail/${i}`);
             goodsDetail(i + 1);
+            $router.push(`/detail/${i}`);
         "
         id="goodsList"
         class="mb-3"
@@ -34,7 +34,10 @@ export default {
         i: Number,
     },
 
-    computed: {
+    // computed: {
+    //     ...mapState(["detail"]),
+    // },
+    methods: {
         ...mapActions(["goodsDetail"]),
     },
 };

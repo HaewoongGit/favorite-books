@@ -3,6 +3,8 @@ const Goods = require("../schemas/Goods");
 
 const router = express.Router();
 
+let i = 1
+
 router.get("/goods", async (req, res, next) => {
     try {
         const goods = await Goods.find();
@@ -28,5 +30,18 @@ router.post("/goods", async (req, res) => {
     }
     res.send({ result: "success" });
 });
+
+router.post("/goods/sample", async (req, res) => {
+    const { sample } = req.body;
+
+    await Goods.create(sample);
+    res.send({ result: "success" });
+});
+
+
+router.get("/create", async (req, res) => {
+    await Goods.create()
+
+})
 
 module.exports = router;
