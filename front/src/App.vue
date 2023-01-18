@@ -18,7 +18,9 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#"><font-awesome-icon icon="cart-shopping" /> 장바구니</a>
+                        <a class="nav-link active" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target="#cartModal"
+                            ><font-awesome-icon icon="cart-shopping" /> 장바구니</a
+                        >
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="#" data-bs-toggle="modal" data-bs-target="#signOutModal"
@@ -36,19 +38,11 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from "vuex";
 import logoutModal from "./components/logoutModal.vue";
 
 export default {
     name: "App",
     components: { logoutModal },
-    computed: {
-        ...mapState(["modalOpen"]),
-    },
-
-    methods: {
-        ...mapMutations(["setModalOpen"]),
-    },
 };
 </script>
 
