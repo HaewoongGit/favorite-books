@@ -26,7 +26,6 @@ export default {
     },
 
     beforeMount() {
-        // console.log("카테고리", typeof this.category);
         this.goodsList(this.category);
     },
 };

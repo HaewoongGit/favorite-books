@@ -11,7 +11,16 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary">장바구니</button>
+                    <button
+                        @click="
+                            cartRegister(quantity);
+                            $router.push('/cart');
+                        "
+                        type="button"
+                        class="btn btn-primary"
+                    >
+                        장바구니
+                    </button>
                 </div>
             </div>
         </div>
@@ -19,7 +28,16 @@
 </template>
 
 <script>
-export default {};
+import { mapActions } from "vuex";
+export default {
+    props: {
+        quantity: Number,
+    },
+    computed: {},
+    mutations: {
+        ...mapActions(["cartRegister"]),
+    },
+};
 </script>
 
 <style></style>
