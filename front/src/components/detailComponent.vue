@@ -25,11 +25,15 @@
                     <div class="row mb-3">
                         <div class="col-5">총 상품금액</div>
                         <div class="col-7 text-right" id="orderNumber">
-                            <small class="mr-2 text-muted">총 수량 {{ quantity }}개 </small>&nbsp; ${{ (detail.price * quantity).toFixed(1) }}
+                            <small class="mr-2 text-muted">총 수량 {{ quantity * 1 }}개 </small>&nbsp; ${{
+                                (detail.price * quantity).toFixed(1)
+                            }}
                         </div>
                     </div>
                     <div class="d-flex justify-content-around">
-                        <button type="button" class="btn btn-outline-primary col-5" data-bs-toggle="modal" data-bs-target="#cartModal">장바구니</button>
+                        <button type="button" class="btn btn-outline-primary col-5" data-bs-toggle="modal" data-bs-target="#cartModal">
+                            장바구니
+                        </button>
                         <button type="button" class="btn btn-primary col-5">바로 구매</button>
                     </div>
                 </div>
@@ -37,7 +41,7 @@
         </div>
     </div>
 
-    <cartModal :quantity="quantity" />
+    <cartModal :quantity="quantity * 1" />
 </template>
 
 <script>

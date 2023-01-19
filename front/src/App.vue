@@ -18,7 +18,9 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page"><font-awesome-icon icon="cart-shopping" /> 장바구니</a>
+                        <a @click="$router.push('/cart')" class="nav-link active" aria-current="page"
+                            ><font-awesome-icon icon="cart-shopping" /> 장바구니</a
+                        >
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="#" data-bs-toggle="modal" data-bs-target="#signOutModal"

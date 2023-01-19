@@ -7,7 +7,7 @@ const store = createStore({
         return {
             goods,
             detail: {},
-            cart: []
+            cart: [],
         };
     },
 
@@ -21,8 +21,8 @@ const store = createStore({
         },
 
         setCart(state, cart) {
-            state.cart = cart
-        }
+            state.cart = cart;
+        },
     },
 
     actions: {
@@ -39,15 +39,16 @@ const store = createStore({
         },
 
         cartRegister(context, payload) {
+            console.log("페이로드 출력", payload);
             axios.post(`http://localhost:3000/api/goods/${context.state.detail.goodsId}/cart`, { quantity: payload });
         },
 
         cartList(context) {
             axios.get(`http://localhost:3000/api/cart`).then((res) => {
-                context.commit("setCart", res.data.cart)
-            }
-            )
-        }
+                console.log("서버로부터 불러오 cart 데이터", res.data.cart);
+                context.commit("setCart", res.data.cart);
+            });
+        },
     },
 });
 

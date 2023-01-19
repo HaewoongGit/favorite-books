@@ -18,6 +18,7 @@
                         "
                         type="button"
                         class="btn btn-primary"
+                        data-bs-dismiss="modal"
                     >
                         장바구니
                     </button>
@@ -33,8 +34,7 @@ export default {
     props: {
         quantity: Number,
     },
-    computed: {},
-    mutations: {
+    methods: {
         ...mapActions(["cartRegister"]),
     },
 };
