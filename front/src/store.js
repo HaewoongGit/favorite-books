@@ -49,10 +49,10 @@ const store = createStore({
         },
 
         cartChange(context, payload) {
-            console.log(context);
-            console.log("payload 출력", payload);
-            axios.patch(`http://localhost:3000/api/cart/update${payload ? '?cartChange=' + payload : ''}`)
-        }
+            axios.patch("http://localhost:3000/api/cart/update", payload).then((res) => {
+                console.log(res.data.result);
+            });
+        },
     },
 });
 

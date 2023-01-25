@@ -23,24 +23,18 @@
 
                                 <div class="row mt-5">
                                     <div class="col-6">
-                                        <button
-                                            @click="
-                                                cartChange(cartChangeValue);
-                                                valueLog();
-                                            "
-                                            type="button"
-                                            class="btn btn-outline-primary w-100"
-                                        >
+                                        <button @click="cartChange(cartChangeValue[i])" type="button" class="btn btn-outline-primary w-100">
                                             수량 변경
                                         </button>
                                     </div>
                                     <div class="col-6">
                                         <select
-                                            @change="cartChangeValue[i] = { quantity: $event.target.value, goodsId: i + 1 }"
+                                            @change="cartChangeValue[i] = { quantity: $event.target.value, goodsId: product.goods.goodsId }"
                                             class="form-select"
                                             id="numberSelect"
                                         >
-                                            <option selected value="1">1</option>
+                                            <option selected value="">선택</option>
+                                            <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
@@ -76,16 +70,16 @@ export default {
     },
     computed: {
         ...mapState(["cart"]),
-        ...mapActions(["cartList"]),
     },
     methods: {
         ...mapActions(["cartChange"]),
-        valueLog() {
-            console.log("cartChangeValue 값: ", this.cartChangeValue);
-        },
+        ...mapActions(["cartList"]),
     },
     beforeMount() {
-        this.cartList;
+        this.cartList();
+    },
+    updated() {
+        this.cartList();
     },
 };
 </script>
