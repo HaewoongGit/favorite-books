@@ -39,16 +39,20 @@ const store = createStore({
         },
 
         cartRegister(context, payload) {
-            console.log("페이로드 출력", payload);
             axios.post(`http://localhost:3000/api/goods/${context.state.detail.goodsId}/cart`, { quantity: payload });
         },
 
         cartList(context) {
             axios.get(`http://localhost:3000/api/cart`).then((res) => {
-                console.log("서버로부터 불러오 cart 데이터", res.data.cart);
                 context.commit("setCart", res.data.cart);
             });
         },
+
+        cartChange(context, payload) {
+            console.log(context);
+            console.log("payload 출력", payload);
+            axios.patch(`http://localhost:3000/api/cart/update${payload ? '?cartChange=' + payload : ''}`)
+        }
     },
 });
 

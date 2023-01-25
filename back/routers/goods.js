@@ -76,4 +76,9 @@ router.get("/cart", async (req, res) => {
     });
 });
 
+
+router.patch("/cart/update", async (req, res) => {
+    console.log("장바구니 업데이트 했을 때 req 출력", req.query);
+})
+
 module.exports = router;
