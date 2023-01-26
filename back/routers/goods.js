@@ -78,6 +78,9 @@ router.get("/cart", async (req, res) => {
 router.patch("/cart/update", async (req, res) => {
     const { quantity, goodsId } = req.body;
 
+    console.log("req.body 출력", req.body);
+    console.log(quantity, goodsId);
+
     const cart = await Cart.find({ goodsId });
     if (cart.length) {
         await Cart.updateOne({ goodsId }, { $set: { quantity } });
