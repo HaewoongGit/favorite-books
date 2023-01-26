@@ -44,12 +44,19 @@ const store = createStore({
 
         cartList(context) {
             axios.get(`http://localhost:3000/api/cart`).then((res) => {
+                console.log(res.data.result);
                 context.commit("setCart", res.data.cart);
             });
         },
 
         cartChange(context, payload) {
-            axios.patch("http://localhost:3000/api/cart/update", payload[0]).then((res) => {
+            axios.patch("http://localhost:3000/api/cart/update", payload).then((res) => {
+                console.log(res.data.result);
+            });
+        },
+
+        cartDelete(context, payload) {
+            axios.delete(`http://localhost:3000/api/cart/delete/${payload}`).then((res) => {
                 console.log(res.data.result);
             });
         },

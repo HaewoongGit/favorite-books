@@ -41,7 +41,7 @@ router.post("/goods/:goodsId/cart", async (req, res) => {
         let { goodsId } = req.params;
         let { quantity } = req.body;
 
-        goodsId = parseInt(goodsId);
+        quantity = parseInt(quantity);
 
         isCart = await Cart.find({ goodsId });
 
@@ -72,21 +72,40 @@ router.get("/cart", async (req, res) => {
 
     res.json({
         cart: concatCart,
+        result: "/api/cart communication success",
     });
 });
 
 router.patch("/cart/update", async (req, res) => {
-    const { quantity, goodsId } = req.body;
+    let { quantity, goodsId } = req.body;
 
-    console.log("req.body 출력", req.body);
-    console.log(quantity, goodsId);
+    quantity = parseInt(quantity);
 
-    const cart = await Cart.find({ goodsId });
+    let cart = await Cart.find({ goodsId });
     if (cart.length) {
         await Cart.updateOne({ goodsId }, { $set: { quantity } });
+        cart = await Cart.find({ goodsId });
     }
 
-    res.send({ result: "success" });
+    res.send({ result: "/cart/update communication success" });
+});
+
+router.delete("/cart/delete/:goodsId", async (req, res) => {
+    try {
+        let { goodsId } = req.params;
+
+        goodsId = parseInt(goodsId);
+
+        const isGoodsInCart = await Cart.find({ goodsId });
+
+        if (isGoodsInCart.length > 0) {
+            await Cart.deleteOne({ goodsId });
+        }
+
+        res.send({ result: "/cart/delete/:goodsId communication success" });
+    } catch (err) {
+        res.send({ result: err });
+    }
 });
 
 module.exports = router;

@@ -31,7 +31,13 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-around">
-                        <button type="button" class="btn btn-outline-primary col-5" data-bs-toggle="modal" data-bs-target="#cartModal">
+                        <button
+                            @click="cartRegister(quantity)"
+                            type="button"
+                            class="btn btn-outline-primary col-5"
+                            data-bs-toggle="modal"
+                            data-bs-target="#cartModal"
+                        >
                             장바구니
                         </button>
                         <button type="button" class="btn btn-primary col-5">바로 구매</button>
@@ -45,7 +51,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import cartModal from "../components/cartModal.vue";
 
 export default {
@@ -59,6 +65,9 @@ export default {
     },
     computed: {
         ...mapState(["detail"]),
+    },
+    methods: {
+        ...mapActions(["cartRegister"]),
     },
 };
 </script>

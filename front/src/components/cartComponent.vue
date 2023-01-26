@@ -23,11 +23,17 @@
 
                                 <div class="row mt-5">
                                     <div class="col-6">
-                                        <button @click="cartChange(cartChangeValue)" type="button" class="btn btn-outline-primary w-100">수량 변경</button>
+                                        <button
+                                            @click="cartDeleteAndList(product.goods.goodsId)"
+                                            type="button"
+                                            class="btn btn-outline-primary w-100"
+                                        >
+                                            삭제
+                                        </button>
                                     </div>
                                     <div class="col-6">
                                         <select
-                                            @change="cartChangeValue[i] = { quantity: $event.target.value, goodsId: product.goods.goodsId }"
+                                            @change="cartChangeAndList({ quantity: $event.target.value, goodsId: product.goods.goodsId })"
                                             class="form-select"
                                             id="numberSelect"
                                         >
@@ -68,22 +74,30 @@ export default {
     },
     computed: {
         ...mapState(["cart"]),
-        ...mapActions(["cartList"]),
     },
     methods: {
-        ...mapActions(["cartChange"]),
+        ...mapActions(["cartChange", "cartList", "cartDelete"]),
         cartPriceSum() {
             let sum = 0;
             for (let i = 0; i < this.cart.length; i++) sum += this.cart[i].quantity * this.cart[i].goods.price;
 
             return sum;
         },
+
+        cartChangeAndList(data) {
+            this.cartChange(data).then(() => {
+                this.cartList();
+            });
+        },
+
+        cartDeleteAndList(data) {
+            this.cartDelete(data).then(() => {
+                this.cartList();
+            });
+        },
     },
     beforeMount() {
-        this.cartList;
-    },
-    beforeUpdate() {
-        this.cartList;
+        this.cartList();
     },
 };
 </script>
