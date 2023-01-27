@@ -8,6 +8,7 @@ const store = createStore({
             goods,
             detail: {},
             cart: [],
+            totalPrice: 0
         };
     },
 
@@ -23,6 +24,11 @@ const store = createStore({
         setCart(state, cart) {
             state.cart = cart;
         },
+
+        cartSum(state, totalPrice) {
+            console.log("결제 가격 출력", totalPrice);
+            state.totalPrice = totalPrice
+        }
     },
 
     actions: {

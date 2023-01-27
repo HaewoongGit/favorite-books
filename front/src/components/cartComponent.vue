@@ -23,11 +23,7 @@
 
                                 <div class="row mt-5">
                                     <div class="col-6">
-                                        <button
-                                            @click="cartDeleteAndList(product.goods.goodsId)"
-                                            type="button"
-                                            class="btn btn-outline-primary w-100"
-                                        >
+                                        <button @click="cartDeleteAndList(product.goods.goodsId)" type="button" class="btn btn-outline-primary w-100">
                                             삭제
                                         </button>
                                     </div>
@@ -59,13 +55,13 @@
                     <b>$ {{ cartPriceSum() }}</b>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary w-100">구매</button>
+            <button @click="$router.push('/buy')" type="button" class="btn btn-primary w-100">구매</button>
         </div>
     </div>
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 export default {
     data() {
         return {
@@ -77,10 +73,12 @@ export default {
     },
     methods: {
         ...mapActions(["cartChange", "cartList", "cartDelete"]),
+        ...mapMutations(["cartSum"]),
         cartPriceSum() {
             let sum = 0;
             for (let i = 0; i < this.cart.length; i++) sum += this.cart[i].quantity * this.cart[i].goods.price;
 
+            this.cartSum(sum);
             return sum;
         },
 
