@@ -1,13 +1,13 @@
 import { createStore } from "vuex";
-import goods from "./assets/goods";
 import axios from "axios";
 
 const store = createStore({
     state() {
         return {
-            goods,
+            goods: [],
             detail: {},
             cart: [],
+            loginStatus: true,
             totalPrice: 0
         };
     },
@@ -26,7 +26,6 @@ const store = createStore({
         },
 
         cartSum(state, totalPrice) {
-            console.log("결제 가격 출력", totalPrice);
             state.totalPrice = totalPrice
         }
     },

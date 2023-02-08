@@ -1,8 +1,8 @@
 FROM node:14
-WORKDIR /myfolder/
-COPY ./package.json /myfolder/
+WORKDIR /favorite-books/
+COPY ./package.json /favorite-books/
 RUN npm install
 
-COPY . /myfolder/
+COPY . /favorite-books/
 
-CMD npm run dev
+CMD npm run start

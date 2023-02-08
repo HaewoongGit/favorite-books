@@ -1,5 +1,5 @@
 const express = require("express");
-const Goods = require("../schemas/Goods");
+const Goods = require("../schemas/goods");
 const Cart = require("../schemas/cart");
 
 const cheerio = require("cheerio");
@@ -10,7 +10,7 @@ const url =
 
 const router = express.Router();
 
-router.get("/goods", async(req, res, next) => {
+router.get("/goods", async (req, res, next) => {
     try {
         if (Object.keys(req.query).length === 0) {
             const goods = await Goods.find({}).sort("-goodsId");
@@ -28,20 +28,20 @@ router.get("/goods", async(req, res, next) => {
     }
 });
 
-router.get("/goods/:goodsId", async(req, res) => {
+router.get("/goods/:goodsId", async (req, res) => {
     const { goodsId } = req.params;
     goods = await Goods.findOne({ goodsId: goodsId });
     res.json({ detail: goods });
 });
 
-router.post("/goods/sample", async(req, res) => {
+router.post("/goods/sample", async (req, res) => {
     const { sample } = req.body;
 
     await Goods.create(sample);
     res.send({ result: "success" });
 });
 
-router.post("/goods/:goodsId/cart", async(req, res) => {
+router.post("/goods/:goodsId/cart", async (req, res) => {
     try {
         let { goodsId } = req.params;
         let { quantity } = req.body;
@@ -61,7 +61,7 @@ router.post("/goods/:goodsId/cart", async(req, res) => {
     }
 });
 
-router.get("/cart", async(req, res) => {
+router.get("/cart", async (req, res) => {
     const cart = await Cart.find({});
     const goodsId = cart.map((cart) => cart.goodsId);
 
@@ -81,7 +81,7 @@ router.get("/cart", async(req, res) => {
     });
 });
 
-router.patch("/cart/update", async(req, res) => {
+router.patch("/cart/update", async (req, res) => {
     let { quantity, goodsId } = req.body;
 
     quantity = parseInt(quantity);
@@ -95,7 +95,7 @@ router.patch("/cart/update", async(req, res) => {
     res.send({ result: "/cart/update communication success" });
 });
 
-router.delete("/cart/delete/:goodsId", async(req, res) => {
+router.delete("/cart/delete/:goodsId", async (req, res) => {
     try {
         let { goodsId } = req.params;
 
@@ -113,18 +113,18 @@ router.delete("/cart/delete/:goodsId", async(req, res) => {
     }
 });
 
-router.get("/goods/add/crawling", async(req, res) => {
+router.get("/goods/add/crawling", async (req, res) => {
 
     try {
         await axios({
             url: url,
             method: "GET",
             responseType: "arraybuffer",
-        }).then(async(html) => {
+        }).then(async (html) => {
             const content = iconv.decode(html.data, "EUC-KR").toString();
             const $ = cheerio.load(content);
             const list = $("ol li");
-            await list.each(async(i, tag) => {
+            await list.each(async (i, tag) => {
                 let desc = $(tag).find("p.copy a").text()
                 let image = $(tag).find("p.image a img").attr("src")
                 let title = $(tag).find("p.image a img").attr("alt")
@@ -134,17 +134,21 @@ router.get("/goods/add/crawling", async(req, res) => {
                     price = price.slice(0, -1).replace(/(,)/g, "")
                     let date = new Date()
                     let goodsId = date.getTime()
-                    await Goods.create({
-                        goodsId: goodsId,
-                        name: title,
-                        thumbnailUrl: image,
-                        category: "도서",
-                        price: price
-                    })
+                    let isgood = await Goods.findOne({ name: title })
+
+                    if (isgood === null) {
+                        await Goods.create({
+                            goodsId: goodsId,
+                            name: title,
+                            thumbnailUrl: image,
+                            category: "도서",
+                            price: price
+                        })
+                    }
                 }
             })
         });
-        res.send({ result: "success", message: "크롤링이 완료 되었습니다." });
+        res.send({ result: "success", message: "크롤링이 완료되었습니다." });
 
     } catch (error) {
         console.log(error)

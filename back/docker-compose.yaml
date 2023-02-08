@@ -6,11 +6,11 @@ services:
             context: .
             dockerfile: Dockerfile
         volumes:
-            - ./index.js:/myfolder/index.js
+            - .:/favorite-books/
         ports:
             - 3000:3000
 
-    my-database:
+    favorite-books-database:
         image: mongo:5
         ports:
             - 27017:27017

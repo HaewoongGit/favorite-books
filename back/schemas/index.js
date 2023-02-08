@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 
 const connect = () => {
-    mongoose.connect("mongodb://127.0.0.1:27017/shopping-mall", {}).catch((err) => console.log(err));
+    // mongoose.connect("mongodb://favorite-books-database:27017/favorite-books", {}).catch((err) => console.log(err));
+    mongoose.connect("mongodb://127.0.0.1:27017/favorite-books", {}).catch((err) => console.log(err));
 };
 
 mongoose.connection.on("error", (err) => {

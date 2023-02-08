@@ -4,8 +4,6 @@ const port = 3000;
 const cors = require('cors');
 
 const goodsRouter = require("./routers/goods");
-
-const userRouter = require("./routes/user");
 const connect = require("./schemas");
 connect();
 
@@ -17,9 +15,7 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(cors());
 
-
-app.use("/api", [goodsRouter]);
-app.use("/user", userRouter);
+app.use("/api", goodsRouter);
 
 app.get("/", (req, res) => {
     res.render("./public/index.html");
