@@ -20,6 +20,9 @@ const goodsSchema = new mongoose.Schema({
     price: {
         type: Number,
     },
+    desc: {
+        type: String
+    }
 });
 
 module.exports = mongoose.model("Goods", goodsSchema);

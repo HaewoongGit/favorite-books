@@ -83,15 +83,21 @@ export default {
         },
 
         cartChangeAndList(data) {
-            this.cartChange(data).then(() => {
-                this.cartList();
-            });
+            // this.cartChange(data).then(() => {
+            //     this.cartList();
+            // });
+
+            this.cartChange(data);
+            this.cartList();
         },
 
         cartDeleteAndList(data) {
-            this.cartDelete(data).then(() => {
-                this.cartList();
-            });
+            // this.cartDelete(data).then(() => {
+            //     this.cartList();
+            // });
+
+            this.cartDelete(data);
+            this.cartList();
         },
     },
     beforeMount() {

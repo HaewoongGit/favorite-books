@@ -19,6 +19,8 @@
                             <span class="card-price ml-2">${{ good.price }}</span>
                         </div>
                         <span class="badge text-bg-secondary">{{ good.category }}</span>
+                        <p class="mt-2">{{ good.desc }}</p>
+                        <p>{{ good.goodsId }}</p>
                     </div>
                 </div>
             </div>

@@ -12,25 +12,21 @@ router.get("/goods", async (req, res, next) => {
             console.log(req.query);
 
             const goods = await Goods.find({ category }).sort("-goodsId");
-            res.json({ goods });
+            res.json(goods);
         }
     } catch (err) {
-        console.error(err);
-        next(err);
+        res.send(err);
     }
 });
 
 router.get("/goods/:goodsId", async (req, res) => {
-    const { goodsId } = req.params;
-    goods = await Goods.findOne({ goodsId: goodsId });
-    res.json(goods);
-});
-
-router.post("/goods/sample", async (req, res) => {
-    const { sample } = req.body;
-
-    await Goods.create(sample);
-    res.send({ result: "success" });
+    try {
+        const { goodsId } = req.params;
+        goods = await Goods.findOne({ goodsId: goodsId });
+        res.json(goods);
+    } catch (err) {
+        res.send(err);
+    }
 });
 
 

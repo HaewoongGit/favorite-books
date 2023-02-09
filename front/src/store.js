@@ -38,9 +38,9 @@ const store = createStore({
         },
 
         goodsDetail(context, payload) {
+            console.log(payload);
             axios.get(`http://localhost:3000/api/goods/${payload}`).then((res) => {
                 context.commit("setDetail", res.data);
-                console.log(res.data);
             });
         },
 
@@ -50,21 +50,16 @@ const store = createStore({
 
         cartList(context) {
             axios.get(`http://localhost:3000/api/cart`).then((res) => {
-                console.log(res.data.result);
-                context.commit("setCart", res.data.cart);
+                context.commit("setCart", res.data);
             });
         },
 
         cartChange(context, payload) {
-            axios.patch("http://localhost:3000/api/cart/update", payload).then((res) => {
-                console.log(res.data.result);
-            });
+            axios.patch("http://localhost:3000/api/cart/update", payload)
         },
 
         cartDelete(context, payload) {
-            axios.delete(`http://localhost:3000/api/cart/delete/${payload}`).then((res) => {
-                console.log(res.data.result);
-            });
+            axios.delete(`http://localhost:3000/api/cart/delete/${payload}`)
         },
     },
 });

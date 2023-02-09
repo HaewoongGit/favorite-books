@@ -1,39 +1,46 @@
 const express = require("express");
 const router = express.Router();
 const Cart = require("../schemas/cart");
+const Goods = require("../schemas/goods");
 
 
 router.get("/cart", async (req, res) => {
-    const cart = await Cart.find({});
-    const goodsId = cart.map((cart) => cart.goodsId);
+    try {
+        const cart = await Cart.find({});
+        const goodsId = cart.map((cart) => cart.goodsId);
 
-    goodsInCart = await Goods.find().where("goodsId").in(goodsId);
+        goodsInCart = await Goods.find().where("goodsId").in(goodsId);
 
-    concatCart = cart.map((c) => {
-        for (let i = 0; i < goodsInCart.length; i++) {
-            if (goodsInCart[i].goodsId == c.goodsId) {
-                return { quantity: c.quantity, goods: goodsInCart[i] };
+        concatCart = cart.map((c) => {
+            for (let i = 0; i < goodsInCart.length; i++) {
+                if (goodsInCart[i].goodsId == c.goodsId) {
+                    return { quantity: c.quantity, goods: goodsInCart[i] };
+                }
             }
-        }
-    });
+        });
 
-    res.json({
-        cart: concatCart,
-        result: "/api/cart communication success",
-    });
+        res.json(
+            concatCart);
+    } catch (err) {
+        res.send(err);
+    }
+
 });
 
 router.patch("/cart/update", async (req, res) => {
-    let { quantity, goodsId } = req.body;
+    try {
+        let { quantity, goodsId } = req.body;
 
-    quantity = parseInt(quantity);
+        quantity = parseInt(quantity);
 
-    let cart = await Cart.find({ goodsId });
-    if (cart.length) {
-        await Cart.updateOne({ goodsId }, { $set: { quantity } });
+        let cart = await Cart.find({ goodsId });
+        if (cart.length) {
+            await Cart.updateOne({ goodsId }, { $set: { quantity } });
+        }
+    } catch (err) {
+        res.send(err);
     }
 
-    res.send({ result: "/cart/update communication success" });
 });
 
 router.post("/cart/:goodsId", async (req, res) => {
@@ -67,8 +74,6 @@ router.delete("/cart/delete/:goodsId", async (req, res) => {
         if (isGoodsInCart.length > 0) {
             await Cart.deleteOne({ goodsId });
         }
-
-        res.send({ result: "/cart/delete/:goodsId communication success" });
     } catch (err) {
         res.send({ result: err });
     }

@@ -10,13 +10,13 @@ const Goods = require("../schemas/goods");
 
 
 router.get("/crawling", async (req, res) => {
-
     try {
         await axios({
             url: url,
             method: "GET",
             responseType: "arraybuffer",
         }).then(async (html) => {
+            let goodsId = 1
             const content = iconv.decode(html.data, "EUC-KR").toString();
             const $ = cheerio.load(content);
             const list = $("ol li");
@@ -25,23 +25,31 @@ router.get("/crawling", async (req, res) => {
                 let image = $(tag).find("p.image a img").attr("src")
                 let title = $(tag).find("p.image a img").attr("alt")
                 let price = $(tag).find("p.price strong").text()
-                let category = $(tag).find("p").text()
+                let category = $(tag).find("p:nth-child(3)").contents().first().text()
 
-                if (desc && image && title && price) {
+                if (desc && image && title && price && category) {
                     price = price.slice(0, -1).replace(/(,)/g, "")
-                    let date = new Date()
-                    let goodsId = date.getTime()
                     let isgood = await Goods.findOne({ name: title })
+                    category = category.slice(1, -2)
+                    const maxGoodsId = await Goods.findOne().sort({ goodsId: -1 });
+
+                    if (maxGoodsId) {
+                        goodsId = maxGoodsId.goodsId
+                    }
 
                     if (isgood === null) {
                         await Goods.create({
-                            goodsId: goodsId,
+                            goodsId,
                             name: title,
                             thumbnailUrl: image,
                             category,
-                            price: price
-                        })
+                            price: price,
+                            desc
+                        }).then(goodsId++)
+
+
                     }
+
                 }
             })
         });
@@ -51,7 +59,6 @@ router.get("/crawling", async (req, res) => {
         console.log(error)
         res.send({ result: "fail", message: "크롤링에 문제가 발생했습니다", error: error });
     }
-
 });
 
 
