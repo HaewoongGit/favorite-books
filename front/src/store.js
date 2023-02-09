@@ -7,7 +7,7 @@ const store = createStore({
             goods: [],
             detail: {},
             cart: [],
-            loginStatus: true,
+            loginStatus: false,
             totalPrice: 0
         };
     },
@@ -39,12 +39,13 @@ const store = createStore({
 
         goodsDetail(context, payload) {
             axios.get(`http://localhost:3000/api/goods/${payload}`).then((res) => {
-                context.commit("setDetail", res.data.detail);
+                context.commit("setDetail", res.data);
+                console.log(res.data);
             });
         },
 
         cartRegister(context, payload) {
-            axios.post(`http://localhost:3000/api/goods/${context.state.detail.goodsId}/cart`, { quantity: payload });
+            axios.post(`http://localhost:3000/api/cart/${context.state.detail.goodsId}`, { quantity: payload });
         },
 
         cartList(context) {

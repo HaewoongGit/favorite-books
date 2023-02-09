@@ -4,6 +4,8 @@ const port = 3000;
 const cors = require('cors');
 
 const goodsRouter = require("./routers/goods");
+const cartRouter = require("./routers/cart");
+const crawlingRouter = require("./routers/crawling");
 const connect = require("./schemas");
 connect();
 
@@ -16,6 +18,8 @@ app.use(express.static("public"));
 app.use(cors());
 
 app.use("/api", goodsRouter);
+app.use("/api", cartRouter);
+app.use("/api", crawlingRouter);
 
 app.get("/", (req, res) => {
     res.render("./public/index.html");
