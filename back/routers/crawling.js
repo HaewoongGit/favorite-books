@@ -53,11 +53,10 @@ router.get("/crawling", async (req, res) => {
                 }
             })
         });
-        res.send({ result: "success", message: "크롤링이 완료되었습니다." });
+        res.status(201).send({ result: "success", message: "크롤링이 완료되었습니다." });
 
     } catch (error) {
-        console.log(error)
-        res.send({ result: "fail", message: "크롤링에 문제가 발생했습니다", error: error });
+        res.status(400).send({ result: "fail", message: "크롤링에 문제가 발생했습니다", error: error });
     }
 });
 

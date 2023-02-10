@@ -28,7 +28,7 @@ router.post("/users", async (req, res) => {
         const user = new User({ email, nickname, password });
         await user.save();
 
-        res.send({ result: "success" });
+        res.status(201);
     } catch (err) {
         res.send(err);
     }

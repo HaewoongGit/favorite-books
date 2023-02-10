@@ -38,7 +38,6 @@ const store = createStore({
         },
 
         goodsDetail(context, payload) {
-            console.log(payload);
             axios.get(`http://localhost:3000/api/goods/${payload}`).then((res) => {
                 context.commit("setDetail", res.data);
             });

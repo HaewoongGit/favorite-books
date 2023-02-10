@@ -19,10 +19,11 @@ router.get("/cart", async (req, res) => {
             }
         });
 
-        res.json(
-            concatCart);
+        res.status(200).json(
+            concatCart
+        );
     } catch (err) {
-        res.send(err);
+        res.status(400).send(err);
     }
 
 });
@@ -37,8 +38,10 @@ router.patch("/cart/update", async (req, res) => {
         if (cart.length) {
             await Cart.updateOne({ goodsId }, { $set: { quantity } });
         }
+
+        res.status(200);
     } catch (err) {
-        res.send(err);
+        res.status(400).send(err);
     }
 
 });
@@ -57,9 +60,10 @@ router.post("/cart/:goodsId", async (req, res) => {
         } else {
             await Cart.create({ goodsId: goodsId, quantity: quantity });
         }
-        res.send({ result: "success" });
+
+        res.status(201);
     } catch (err) {
-        console.log(err);
+        res.status(400).send(err);
     }
 });
 
@@ -74,8 +78,9 @@ router.delete("/cart/delete/:goodsId", async (req, res) => {
         if (isGoodsInCart.length > 0) {
             await Cart.deleteOne({ goodsId });
         }
+        res.status(200);
     } catch (err) {
-        res.send({ result: err });
+        res.status(400).send(err);
     }
 });
 

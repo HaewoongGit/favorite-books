@@ -37,6 +37,7 @@
 
     <logInModal />
     <logoutModal />
+    <signupModal />
 
     <router-view />
 </template>
@@ -45,10 +46,11 @@
 import { mapState } from "vuex";
 import logoutModal from "./components/logoutModal.vue";
 import logInModal from "./components/logInModal.vue";
+import signupModal from "./components/signupModal.vue";
 
 export default {
     name: "App",
-    components: { logoutModal, logInModal },
+    components: { logoutModal, logInModal, signupModal },
     computed: {
         ...mapState(["loginStatus"]),
     },
