@@ -23,10 +23,10 @@
                         >
                     </li>
                     <li class="nav-item">
-                        <a v-if="loginStatus === false" class="nav-link active" href="#" data-bs-toggle="modal" data-bs-target="#logInModal"
+                        <a v-if="token.length === 0" class="nav-link active" href="#" data-bs-toggle="modal" data-bs-target="#logInModal"
                             ><font-awesome-icon icon="fa-solid fa-right-from-bracket" /> 로그인</a
                         >
-                        <a v-if="loginStatus === true" class="nav-link active" href="#" data-bs-toggle="modal" data-bs-target="#logOutModal"
+                        <a v-if="token.length !== 0" class="nav-link active" href="#" data-bs-toggle="modal" data-bs-target="#logOutModal"
                             ><font-awesome-icon icon="fa-solid fa-right-from-bracket" /> 로그아웃</a
                         >
                     </li>
@@ -52,7 +52,12 @@ export default {
     name: "App",
     components: { logoutModal, logInModal, signupModal },
     computed: {
-        ...mapState(["loginStatus"]),
+        ...mapState(["token"]),
+    },
+    methods: {
+        test() {
+            console.log(this.token);
+        },
     },
 };
 </script>

@@ -25,9 +25,7 @@
                     <div class="row mb-3">
                         <div class="col-5">총 상품금액</div>
                         <div class="col-7 text-right" id="orderNumber">
-                            <small class="mr-2 text-muted">총 수량 {{ quantity * 1 }}개 </small>&nbsp; ${{
-                                (detail.price * quantity).toFixed(1)
-                            }}
+                            <small class="mr-2 text-muted">총 수량 {{ quantity * 1 }}개 </small>&nbsp; ${{ (detail.price * quantity).toFixed(1) }}
                         </div>
                     </div>
                     <div class="d-flex justify-content-around">
@@ -40,7 +38,7 @@
                         >
                             장바구니
                         </button>
-                        <button type="button" class="btn btn-primary col-5">바로 구매</button>
+                        <button @click="$router.push('/buy')" type="button" class="btn btn-primary col-5">바로 구매</button>
                     </div>
                 </div>
             </div>

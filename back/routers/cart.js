@@ -58,7 +58,7 @@ router.post("/cart/:goodsId", async (req, res) => {
         if (isCart.length) {
             await Cart.updateOne({ goodsId }, { $set: { quantity } });
         } else {
-            await Cart.create({ goodsId: goodsId, quantity: quantity });
+            await Cart.create({ goodsId, quantity });
         }
 
         res.status(201);
