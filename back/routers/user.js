@@ -24,7 +24,7 @@ router.post("/users", async (req, res) => {
         }
 
         await User.create({ email, nickname, password })
-        res.status(201).send("회원가입 성공");
+        res.status(201).send("success");
     } catch (err) {
         res.status(400).send(err);
     }

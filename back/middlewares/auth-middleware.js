@@ -2,24 +2,23 @@ const jwt = require("jsonwebtoken");
 const User = require("../schemas/user");
 
 module.exports = (req, res, next) => {
-    const authToken = req.headers;
+    const { token } = req.headers;
 
-    if (authToken === undefined) {
-        res.status(401).send({
-            errorMessage: "로그인 후 이용 가능한 기능입니다.",
-        });
+
+    if (token === undefined) {
+        res.status(401).send("로그인 후 이용 가능한 기능입니다."
+        );
         return;
     }
 
     try {
-        const { nickname } = jwt.verify(authToken, process.env.JWT_TOKEN);
-        User.findById(nickname).then((user) => {
+        const { nickname } = jwt.verify(token, process.env.JWT_TOKEN);
+        User.findOne({ nickname }).then((user) => {
             res.locals.user = user;
             next();
         });
     } catch (err) {
-        res.status(401).send({
-            errorMessage: "로그인 후 이용 가능한 기능입니다.",
-        });
+        console.log("에러 출력: ", err);
+        res.status(401).send({ reponseMessage: "로그인 후 이용 가능한 기능입니다.", errormessage: err });
     }
 };

@@ -2,12 +2,15 @@ const express = require("express");
 const router = express.Router();
 const Cart = require("../schemas/cart");
 const Goods = require("../schemas/goods");
+const authMiddleware = require("../middlewares/auth-middleware")
 
 
-router.get("/cart", async (req, res) => {
+router.get("/cart", authMiddleware, async (req, res) => {
     try {
-        const cart = await Cart.find({});
+        const { nickname } = res.locals.user
+        const cart = await Cart.find({ nickname });
         const goodsId = cart.map((cart) => cart.goodsId);
+
 
         goodsInCart = await Goods.find().where("goodsId").in(goodsId);
 
@@ -28,15 +31,16 @@ router.get("/cart", async (req, res) => {
 
 });
 
-router.patch("/cart/update", async (req, res) => {
+router.patch("/cart/update", authMiddleware, async (req, res) => {
     try {
+        const { nickname } = res.locals.user;
         let { quantity, goodsId } = req.body;
 
         quantity = parseInt(quantity);
 
-        let cart = await Cart.find({ goodsId });
+        let cart = await Cart.find({ goodsId, nickname });
         if (cart.length) {
-            await Cart.updateOne({ goodsId }, { $set: { quantity } });
+            await Cart.updateOne({ goodsId, nickname }, { $set: { quantity } });
         }
 
         res.status(200);
@@ -46,37 +50,44 @@ router.patch("/cart/update", async (req, res) => {
 
 });
 
-router.post("/cart/:goodsId", async (req, res) => {
+router.post("/cart/:goodsId", authMiddleware, async (req, res) => {
     try {
+        const { nickname } = res.locals.user
         let { goodsId } = req.params;
         let { quantity } = req.body;
 
+        console.log(nickname, goodsId, quantity);
+
         quantity = parseInt(quantity);
 
-        isCart = await Cart.find({ goodsId });
+        isCart = await Cart.find({ goodsId, nickname });
+
+        console.log(isCart, isCart.length);
 
         if (isCart.length) {
-            await Cart.updateOne({ goodsId }, { $set: { quantity } });
+            await Cart.updateOne({ goodsId, nickname }, { $set: { quantity } });
         } else {
-            await Cart.create({ goodsId, quantity });
+            await Cart.create({ goodsId, nickname, quantity });
         }
 
         res.status(201);
     } catch (err) {
-        res.status(400).send(err);
+        console.log(err);
+        res.status(400).send({ errorMessage: err });
     }
 });
 
-router.delete("/cart/delete/:goodsId", async (req, res) => {
+router.delete("/cart/delete/:goodsId", authMiddleware, async (req, res) => {
     try {
+        const { nickname } = res.locals.user
         let { goodsId } = req.params;
 
         goodsId = parseInt(goodsId);
 
-        const isGoodsInCart = await Cart.find({ goodsId });
+        const isGoodsInCart = await Cart.find({ goodsId, nickname });
 
         if (isGoodsInCart.length > 0) {
-            await Cart.deleteOne({ goodsId });
+            await Cart.deleteOne({ goodsId, nickname });
         }
         res.status(200);
     } catch (err) {

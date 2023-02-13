@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+    <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true" ref="signupModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -66,7 +66,8 @@ export default {
             this.signUp(obj).then((res) => {
                 if (res === "success") {
                     alert("회원가입되었습니다. 로그인해주세요!");
-                    location.reload();
+                    this.$refs.signupModal.setAttribute("data-bs-dismiss", "modal");
+                    this.$refs.signupModal.click();
                 }
             });
         },

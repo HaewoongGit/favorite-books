@@ -23,13 +23,11 @@
 
                                 <div class="row mt-5">
                                     <div class="col-6">
-                                        <button @click="cartDeleteAndList(product.goods.goodsId)" type="button" class="btn btn-outline-primary w-100">
-                                            삭제
-                                        </button>
+                                        <button @click="cartDelete(product.goods.goodsId)" type="button" class="btn btn-outline-primary w-100">삭제</button>
                                     </div>
                                     <div class="col-6">
                                         <select
-                                            @change="cartChangeAndList({ quantity: $event.target.value, goodsId: product.goods.goodsId })"
+                                            @change="cartChange({ quantity: $event.target.value, goodsId: product.goods.goodsId })"
                                             class="form-select"
                                             id="numberSelect"
                                         >
@@ -83,26 +81,29 @@ export default {
         },
 
         cartChangeAndList(data) {
-            // this.cartChange(data).then(() => {
-            //     this.cartList();
-            // });
+            this.cartChange(data).then(() => {
+                this.cartList();
+            });
 
-            this.cartChange(data);
-            this.cartList();
+            // this.cartChange(data);
+            // this.cartList();
         },
 
         cartDeleteAndList(data) {
-            // this.cartDelete(data).then(() => {
-            //     this.cartList();
-            // });
+            this.cartDelete(data).then(() => {
+                this.cartList();
+            });
 
-            this.cartDelete(data);
-            this.cartList();
+            // this.cartDelete(data);
+            // this.cartList();
         },
     },
     beforeMount() {
         this.cartList();
     },
+    // beforeUpdate() {
+    //     this.cartList();
+    // },
 };
 </script>
 

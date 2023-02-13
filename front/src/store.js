@@ -48,21 +48,22 @@ const store = createStore({
         },
 
         cartRegister(context, payload) {
-            axios.post(`http://localhost:3000/api/cart/${context.state.detail.goodsId}`, { quantity: payload });
+            axios.post(`http://localhost:3000/api/cart/${context.state.detail.goodsId}`, { quantity: payload }, { headers: { token: this.state.token } });
         },
 
         cartList(context) {
-            axios.get(`http://localhost:3000/api/cart`).then((res) => {
+            axios.get(`http://localhost:3000/api/cart`, { headers: { token: this.state.token } }).then((res) => {
                 context.commit("setCart", res.data);
+                console.log("출력");
             });
         },
 
         cartChange(context, payload) {
-            axios.patch("http://localhost:3000/api/cart/update", payload)
+            axios.patch("http://localhost:3000/api/cart/update", payload, { headers: { token: this.state.token } })
         },
 
         cartDelete(context, payload) {
-            axios.delete(`http://localhost:3000/api/cart/delete/${payload}`)
+            axios.delete(`http://localhost:3000/api/cart/delete/${payload}`, { headers: { token: this.state.token } })
         },
 
         signUp(context, payload) {
@@ -85,9 +86,7 @@ const store = createStore({
         signIn(context, payload) {
             return new Promise((resolve, reject) => {
                 axios.post("http://localhost:3000/api/auth", payload).then(res => {
-                    console.log("토큰 출력!!", res.data.token);
                     context.commit("setToken", res.data.token)
-                    console.log("토큰 출력2", this.state.token);
 
                     resolve("success")
                 }).catch(error => {
