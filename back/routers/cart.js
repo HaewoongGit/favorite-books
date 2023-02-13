@@ -56,13 +56,9 @@ router.post("/cart/:goodsId", authMiddleware, async (req, res) => {
         let { goodsId } = req.params;
         let { quantity } = req.body;
 
-        console.log(nickname, goodsId, quantity);
-
         quantity = parseInt(quantity);
 
         isCart = await Cart.find({ goodsId, nickname });
-
-        console.log(isCart, isCart.length);
 
         if (isCart.length) {
             await Cart.updateOne({ goodsId, nickname }, { $set: { quantity } });

@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
 import axios from "axios";
+import router from '@/router'
 
 const store = createStore({
     state() {
@@ -8,7 +9,8 @@ const store = createStore({
             detail: {},
             cart: [],
             token: "",
-            totalPrice: 0
+            totalPrice: 0,
+            buyList: []
         };
     },
 
@@ -31,6 +33,9 @@ const store = createStore({
 
         setToken(state, token) {
             state.token = token
+        },
+        setBuyList(state, buyList) {
+            state.buyList = buyList
         }
     },
 
@@ -48,13 +53,15 @@ const store = createStore({
         },
 
         cartRegister(context, payload) {
-            axios.post(`http://localhost:3000/api/cart/${context.state.detail.goodsId}`, { quantity: payload }, { headers: { token: this.state.token } });
+            axios.post(`http://localhost:3000/api/cart/${context.state.detail.goodsId}`, { quantity: payload }, { headers: { token: this.state.token } }).catch(err => { alert("로그인 해주세요.", err) });
         },
 
         cartList(context) {
             axios.get(`http://localhost:3000/api/cart`, { headers: { token: this.state.token } }).then((res) => {
                 context.commit("setCart", res.data);
-                console.log("출력");
+            }).catch(err => {
+                alert(err.response.data.errormessage)
+                router.push("/")
             });
         },
 

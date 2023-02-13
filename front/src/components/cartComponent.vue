@@ -23,11 +23,13 @@
 
                                 <div class="row mt-5">
                                     <div class="col-6">
-                                        <button @click="cartDelete(product.goods.goodsId)" type="button" class="btn btn-outline-primary w-100">삭제</button>
+                                        <button @click="cartDeleteAndList(product.goods.goodsId)" type="button" class="btn btn-outline-primary w-100">
+                                            삭제
+                                        </button>
                                     </div>
                                     <div class="col-6">
                                         <select
-                                            @change="cartChange({ quantity: $event.target.value, goodsId: product.goods.goodsId })"
+                                            @change="cartChangeAndList({ quantity: $event.target.value, goodsId: product.goods.goodsId })"
                                             class="form-select"
                                             id="numberSelect"
                                         >
@@ -53,7 +55,16 @@
                     <b>$ {{ cartPriceSum() }}</b>
                 </div>
             </div>
-            <button @click="$router.push('/buy')" type="button" class="btn btn-primary w-100">구매</button>
+            <button
+                @click="
+                    $router.push('/buy');
+                    setBuyList();
+                "
+                type="button"
+                class="btn btn-primary w-100"
+            >
+                구매
+            </button>
         </div>
     </div>
 </template>
@@ -71,7 +82,7 @@ export default {
     },
     methods: {
         ...mapActions(["cartChange", "cartList", "cartDelete"]),
-        ...mapMutations(["cartSum"]),
+        ...mapMutations(["cartSum", "setBuyList"]),
         cartPriceSum() {
             let sum = 0;
             for (let i = 0; i < this.cart.length; i++) sum += this.cart[i].quantity * this.cart[i].goods.price;
@@ -84,26 +95,30 @@ export default {
             this.cartChange(data).then(() => {
                 this.cartList();
             });
-
-            // this.cartChange(data);
-            // this.cartList();
         },
 
         cartDeleteAndList(data) {
             this.cartDelete(data).then(() => {
                 this.cartList();
             });
+        },
 
-            // this.cartDelete(data);
-            // this.cartList();
+        cartTobuyList(data) {
+            let list = [];
+            for (const product of data) {
+                list.push({
+                    goodsId: product.goods.goodsId,
+                    name: product.goods.name,
+                    quantity: product.quantity,
+                    price: product.goods.price * product.quantity,
+                });
+            }
+            this.setBuyList(list);
         },
     },
     beforeMount() {
         this.cartList();
     },
-    // beforeUpdate() {
-    //     this.cartList();
-    // },
 };
 </script>
 
