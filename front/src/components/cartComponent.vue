@@ -58,7 +58,7 @@
             <button
                 @click="
                     $router.push('/buy');
-                    setBuyList();
+                    cartTobuyList(cart);
                 "
                 type="button"
                 class="btn btn-primary w-100"
