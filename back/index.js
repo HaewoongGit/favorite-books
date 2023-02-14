@@ -8,6 +8,7 @@ const goodsRouter = require("./routers/goods");
 const cartRouter = require("./routers/cart");
 const userRouter = require("./routers/user")
 const crawlingRouter = require("./routers/crawling");
+const buyRouter = require("./routers/buy")
 const connect = require("./schemas");
 connect();
 
@@ -19,7 +20,7 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(cors());
 
-app.use("/api", goodsRouter, cartRouter, crawlingRouter, userRouter);
+app.use("/api", goodsRouter, cartRouter, crawlingRouter, userRouter, buyRouter);
 
 app.get("/", (req, res) => {
     res.render("./public/index.html");

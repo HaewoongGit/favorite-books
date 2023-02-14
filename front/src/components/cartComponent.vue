@@ -82,12 +82,12 @@ export default {
     },
     methods: {
         ...mapActions(["cartChange", "cartList", "cartDelete"]),
-        ...mapMutations(["cartSum", "setBuyList"]),
+        ...mapMutations(["setTotalPrice", "setBuyList"]),
         cartPriceSum() {
             let sum = 0;
             for (let i = 0; i < this.cart.length; i++) sum += this.cart[i].quantity * this.cart[i].goods.price;
 
-            this.cartSum(sum);
+            this.setTotalPrice(sum);
             return sum;
         },
 

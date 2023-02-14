@@ -27,7 +27,7 @@ const store = createStore({
             state.cart = cart;
         },
 
-        cartSum(state, totalPrice) {
+        setTotalPrice(state, totalPrice) {
             state.totalPrice = totalPrice
         },
 
@@ -36,7 +36,7 @@ const store = createStore({
         },
         setBuyList(state, buyList) {
             state.buyList = buyList
-        }
+        },
     },
 
     actions: {
@@ -95,6 +95,18 @@ const store = createStore({
                 axios.post("http://localhost:3000/api/auth", payload).then(res => {
                     context.commit("setToken", res.data.token)
 
+                    resolve("success")
+                }).catch(error => {
+                    reject(error)
+                })
+            })
+        },
+
+        buy(context, payload) {
+            console.log(payload);
+
+            return new Promise((resolve, reject) => {
+                axios.post("http://localhost:3000/api/buy", payload, { headers: { token: this.state.token } }).then(() => {
                     resolve("success")
                 }).catch(error => {
                     reject(error)

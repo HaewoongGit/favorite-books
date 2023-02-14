@@ -43,7 +43,7 @@ router.patch("/cart/update", authMiddleware, async (req, res) => {
             await Cart.updateOne({ goodsId, nickname }, { $set: { quantity } });
         }
 
-        res.status(200);
+        res.status(200).send("success");
     } catch (err) {
         res.status(400).send(err);
     }
@@ -58,7 +58,7 @@ router.post("/cart/:goodsId", authMiddleware, async (req, res) => {
 
         quantity = parseInt(quantity);
 
-        isCart = await Cart.find({ goodsId, nickname });
+        let isCart = await Cart.find({ goodsId, nickname });
 
         if (isCart.length) {
             await Cart.updateOne({ goodsId, nickname }, { $set: { quantity } });
@@ -66,10 +66,10 @@ router.post("/cart/:goodsId", authMiddleware, async (req, res) => {
             await Cart.create({ goodsId, nickname, quantity });
         }
 
-        res.status(201);
+        res.status(201).send("success");
     } catch (err) {
         console.log(err);
-        res.status(400).send({ errorMessage: err });
+        res.status(400).send(err);
     }
 });
 
@@ -85,7 +85,7 @@ router.delete("/cart/delete/:goodsId", authMiddleware, async (req, res) => {
         if (isGoodsInCart.length > 0) {
             await Cart.deleteOne({ goodsId, nickname });
         }
-        res.status(200);
+        res.status(200).send("success");
     } catch (err) {
         res.status(400).send(err);
     }

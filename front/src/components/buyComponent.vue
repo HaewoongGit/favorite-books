@@ -3,30 +3,62 @@
         <form class="row">
             <h3 class="mb-3"><font-awesome-icon icon="truck-fast" /> <b>배송지 입력</b></h3>
             <div class="col-12 mb-3">
-                <label for="inputAddress" class="form-label">받는 사람</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="홍길동" />
+                <label for="recipient" class="form-label">받는 사람</label>
+                <input v-model="recipient" type="text" class="form-control" id="recipient" placeholder="홍길동" />
             </div>
             <div class="col-12 mb-3">
-                <label for="inputAddress2" class="form-label">연락처</label>
-                <input type="text" class="form-control" id="inputAddress2" placeholder="010-xxx-xxxx" />
+                <label for="contactInformation" class="form-label">연락처</label>
+                <input v-model="contactInformation" type="text" class="form-control" id="contactInformation" placeholder="010-xxx-xxxx" />
             </div>
             <div class="col-12 mb-3">
-                <label for="inputAddress2" class="form-label">주소</label>
-                <input type="text" class="form-control mb-2" id="inputAddress2" placeholder="도로명, 건물명, 번지 검색" />
-                <input type="text" class="form-control" id="inputAddress2" placeholder="상세주소" />
+                <label for="inputAddress" class="form-label">주소</label>
+                <input v-model="address1" type="text" class="form-control mb-2" id="inputAddress" placeholder="도로명, 건물명, 번지 검색" />
+                <input v-model="address2" type="text" class="form-control" id="inputAddress2" placeholder="상세주소" />
             </div>
             <div class="d-grid gap-2 mb-3">
-                <button type="submit" class="btn btn-primary">$ {{ totalPrice }} 결제</button>
+                <button
+                    @click="buyAndToMain({ recipient, contactInformation, address: address1 + ' ' + address2, buyList, totalPrice })"
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    $ {{ totalPrice }} 결제
+                </button>
             </div>
         </form>
     </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
+import router from "@/router";
+
 export default {
+    data() {
+        return {
+            recipient: "",
+            contactInformation: "",
+            address1: "",
+            address2: "",
+        };
+    },
     computed: {
-        ...mapState(["totalPrice"]),
+        ...mapState(["totalPrice", "buyList"]),
+    },
+    methods: {
+        ...mapActions(["buy"]),
+        buyAndToMain(data) {
+            this.buy(data)
+                .then((res) => {
+                    if (res === "success") {
+                        alert("구매 완료");
+                        router.push("/");
+                    }
+                })
+                .catch((err) => {
+                    console.log("buy action 실패 로그", err);
+                    alert("구매 실패", err);
+                });
+        },
     },
 };
 </script>
