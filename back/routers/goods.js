@@ -11,7 +11,7 @@ router.get("/goods", async (req, res, next) => {
             const { category } = req.query;
 
             const goods = await Goods.find({ category }).sort("-goodsId");
-            res.status(200).json(goods);
+            res.status(200).json({ goods: goods });
         }
     } catch (err) {
         res.status(400).send(err);
