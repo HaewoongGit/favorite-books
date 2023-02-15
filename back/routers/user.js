@@ -5,12 +5,12 @@ const Joi = require("joi");
 
 const signupSchema = Joi.object({
     email: Joi.string().pattern(new RegExp(
-        "^[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,6}$")).required(),
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)).required(),
     nickname: Joi.string().required(),
     password: Joi.string().pattern(new RegExp(
-        "^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$")).required(),
+        /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/)).required(),
     confirmPassword: Joi.string().pattern(new RegExp(
-        "^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$")).required()
+        /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/)).required()
 })
 
 // 회원가입 API

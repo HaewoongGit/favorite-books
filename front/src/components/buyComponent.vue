@@ -12,7 +12,7 @@
             </div>
             <div class="col-12 mb-3">
                 <label for="inputAddress" class="form-label">주소</label>
-                <input v-model="address1" type="text" class="form-control mb-2" id="inputAddress" placeholder="도로명, 건물명, 번지 검색" />
+                <input v-model="address1" type="text" class="form-control mb-2" id="inputAddress" placeholder="도로명, 건물명, 번지" />
                 <input v-model="address2" type="text" class="form-control" id="inputAddress2" placeholder="상세주소" />
             </div>
             <div class="d-grid gap-2 mb-3">
@@ -54,9 +54,8 @@ export default {
                         router.push("/");
                     }
                 })
-                .catch((err) => {
-                    console.log("buy action 실패 로그", err);
-                    alert("구매 실패", err);
+                .catch((error) => {
+                    alert(error.response.data);
                 });
         },
     },
