@@ -1,11 +1,23 @@
 const express = require("express");
 const User = require("../schemas/user");
 const router = express.Router();
+const Joi = require("joi");
+
+const signupSchema = Joi.object({
+    email: Joi.string().pattern(new RegExp(
+        "^[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,6}$")).required(),
+    nickname: Joi.string().required(),
+    password: Joi.string().pattern(new RegExp(
+        "^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$")).required(),
+    confirmPassword: Joi.string().pattern(new RegExp(
+        "^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$")).required()
+})
 
 // 회원가입 API
 router.post("/users", async (req, res) => {
     try {
-        const { email, nickname, password, confirmPassword } = req.body;
+        const { email, nickname, password, confirmPassword } = await signupSchema.validateAsync(req.body);
+
 
         if (password !== confirmPassword) {
             res.status(400).send({
@@ -25,8 +37,17 @@ router.post("/users", async (req, res) => {
 
         await User.create({ email, nickname, password })
         res.status(201).send("success");
-    } catch (err) {
-        res.status(400).send(err);
+    } catch (error) {
+        console.log(error);
+        const errorMessage = error.details.map(detail => detail.message).join(',');
+        if (errorMessage.includes("email"))
+            res.status(400).send("이메일을 형식에 맞게 입력하세요.");
+        else if (errorMessage.includes("nickname"))
+            res.status(400).send("닉네임을 형식에 맞게 입력하세요.");
+        else if (errorMessage.includes("password"))
+            res.status(400).send("비밀번호를 형식에 맞게 입력하세요.");
+        else
+            res.status(400).send(error);
     }
 
 });

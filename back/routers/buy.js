@@ -22,6 +22,7 @@ router.get("/buy", authMiddleware, async (req, res) => {
         const { nickname } = res.locals.user;
 
         let buyCompleteInformation = await Buy.find({ nickname }).sort("-dateTime");
+        console.log(buyCompleteInformation);
         let orderHistory = []
         for (const lists of buyCompleteInformation) {
             for (const list of lists.orderedList) {

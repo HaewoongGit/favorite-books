@@ -84,11 +84,7 @@ const store = createStore({
                         resolve(res.data)
                     }
                 }).catch(error => {
-                    if (error.response.status === 406) {
-                        alert(error.response.data)
-                    } else {
-                        alert("에러 발생. ", error.response.data)
-                    }
+                    console.log(error);
                     reject(error);
                 })
             })

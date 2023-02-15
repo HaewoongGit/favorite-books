@@ -63,13 +63,17 @@ export default {
     methods: {
         ...mapActions(["signUp"]),
         signUpAndClose(obj) {
-            this.signUp(obj).then((res) => {
-                if (res === "success") {
-                    alert("회원가입되었습니다. 로그인해주세요!");
-                    this.$refs.signupModal.setAttribute("data-bs-dismiss", "modal");
-                    this.$refs.signupModal.click();
-                }
-            });
+            this.signUp(obj)
+                .then((res) => {
+                    if (res === "success") {
+                        alert("회원가입되었습니다. 로그인해주세요!");
+                        this.$refs.signupModal.setAttribute("data-bs-dismiss", "modal");
+                        this.$refs.signupModal.click();
+                    }
+                })
+                .catch((error) => {
+                    alert(error.response.data);
+                });
         },
     },
 };
