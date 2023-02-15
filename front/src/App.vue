@@ -20,6 +20,11 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
+                        <a v-if="token.length !== 0" @click="$router.push('/orderHistory')" class="nav-link active" style="cursor: pointer" aria-current="page"
+                            ><font-awesome-icon icon="bag-shopping" /> 주문목록</a
+                        >
+                    </li>
+                    <li class="nav-item">
                         <a v-if="token.length !== 0" @click="$router.push('/cart')" class="nav-link active" style="cursor: pointer" aria-current="page"
                             ><font-awesome-icon icon="cart-shopping" /> 장바구니</a
                         >

@@ -4,7 +4,7 @@ const goodsSchema = new mongoose.Schema({
     goodsId: {
         type: Number,
         required: true,
-        unique: true,
+        unique: true
     },
     name: {
         type: String,
@@ -13,15 +13,19 @@ const goodsSchema = new mongoose.Schema({
     },
     thumbnailUrl: {
         type: String,
+        index: false
     },
     category: {
         type: String,
+        index: false
     },
     price: {
         type: Number,
+        index: false
     },
     desc: {
-        type: String
+        type: String,
+        index: false
     }
 });
 

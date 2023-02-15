@@ -17,7 +17,7 @@
             </div>
             <div class="d-grid gap-2 mb-3">
                 <button
-                    @click="buyAndToMain($event, { recipient, contactInformation, address: address1 + ' ' + address2, buyList, totalPrice })"
+                    @click="buyAndToMain($event, { recipient, contactInformation, address: address1 + ' ' + address2, shoppingList, totalPrice })"
                     class="btn btn-primary"
                 >
                     $ {{ totalPrice }} 결제
@@ -41,13 +41,13 @@ export default {
         };
     },
     computed: {
-        ...mapState(["totalPrice", "buyList"]),
+        ...mapState(["totalPrice", "shoppingList"]),
     },
     methods: {
-        ...mapActions(["buy"]),
+        ...mapActions(["shoppingListPost"]),
         buyAndToMain(event, data) {
             event.preventDefault();
-            this.buy(data)
+            this.shoppingListPost(data)
                 .then((res) => {
                     if (res === "success") {
                         alert("구매 완료");

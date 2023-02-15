@@ -21,7 +21,7 @@ const buySchema = new mongoose.Schema({
         required: true,
         index: false
     },
-    buyList: {
+    orderedList: {
         type: Array,
         required: true,
         index: false

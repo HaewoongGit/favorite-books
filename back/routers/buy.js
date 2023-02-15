@@ -7,9 +7,9 @@ const authMiddleware = require("../middlewares/auth-middleware")
 router.post("/buy", authMiddleware, async (req, res) => {
     try {
         const { nickname } = res.locals.user;
-        const { recipient, contactInformation, address, buyList, totalPrice } = req.body;
+        const { recipient, contactInformation, address, shoppingList, totalPrice } = req.body;
 
-        await Buy.create({ nickname, recipient, contactInformation, address, buyList, totalPrice });
+        await Buy.create({ nickname, recipient, contactInformation, address, orderedList: shoppingList, totalPrice });
         res.status(201).send("success")
     } catch (err) {
         console.log(err);
@@ -22,16 +22,16 @@ router.get("/buy", authMiddleware, async (req, res) => {
         const { nickname } = res.locals.user;
 
         let buyCompleteInformation = await Buy.find({ nickname }).sort("-dateTime");
-        let buyCompleteList = []
+        let orderHistory = []
         for (const lists of buyCompleteInformation) {
-            for (const list of lists.buyList) {
+            for (const list of lists.orderedList) {
                 list["date"] = lists.dateTime.getFullYear() + "-" + lists.dateTime.getMonth() + "-" + lists.dateTime.getDate();
                 let goodsData = await Goods.findOne({ goodsId: list.goodsId });
                 list["thumbnailUrl"] = goodsData.thumbnailUrl;
-                buyCompleteList.push(list);
+                orderHistory.push(list);
             }
         }
-        res.status(200).send(buyCompleteList);
+        res.status(200).send(orderHistory);
     } catch (err) {
         res.status(400).send(err);
     }

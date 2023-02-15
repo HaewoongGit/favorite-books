@@ -43,7 +43,7 @@
                             v-if="token.length !== 0"
                             @click="
                                 setTotalPrice(detail.price * quantity);
-                                setBuyList([{ goodsId: detail.goodsId, name: detail.name, quantity, price: detail.price * quantity }]);
+                                setShoppingList([{ goodsId: detail.goodsId, name: detail.name, quantity, price: detail.price * quantity }]);
                                 $router.push('/buy');
                             "
                             type="button"
@@ -78,7 +78,7 @@ export default {
     },
     methods: {
         ...mapActions(["cartRegister"]),
-        ...mapMutations(["setBuyList", "setTotalPrice"]),
+        ...mapMutations(["setShoppingList", "setTotalPrice"]),
     },
 };
 </script>

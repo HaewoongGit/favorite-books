@@ -58,7 +58,7 @@
             <button
                 @click="
                     $router.push('/buy');
-                    cartTobuyList(cart);
+                    cartToShoppingList(cart);
                 "
                 type="button"
                 class="btn btn-primary w-100"
@@ -82,7 +82,7 @@ export default {
     },
     methods: {
         ...mapActions(["cartChange", "cartList", "cartDelete"]),
-        ...mapMutations(["setTotalPrice", "setBuyList"]),
+        ...mapMutations(["setTotalPrice", "setShoppingList"]),
         cartPriceSum() {
             let sum = 0;
             for (let i = 0; i < this.cart.length; i++) sum += this.cart[i].quantity * this.cart[i].goods.price;
@@ -103,7 +103,7 @@ export default {
             });
         },
 
-        cartTobuyList(data) {
+        cartToShoppingList(data) {
             let list = [];
             for (const product of data) {
                 list.push({
@@ -112,8 +112,9 @@ export default {
                     quantity: product.quantity,
                     price: product.goods.price * product.quantity,
                 });
+                this.cartDelete(product.goods.goodsId);
             }
-            this.setBuyList(list);
+            this.setShoppingList(list);
         },
     },
     beforeMount() {

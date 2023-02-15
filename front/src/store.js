@@ -10,7 +10,8 @@ const store = createStore({
             cart: [],
             token: "",
             totalPrice: 0,
-            buyList: []
+            shoppingList: [],
+            orderHistory: []
         };
     },
 
@@ -34,9 +35,12 @@ const store = createStore({
         setToken(state, token) {
             state.token = token
         },
-        setBuyList(state, buyList) {
-            state.buyList = buyList
+        setShoppingList(state, shoppingList) {
+            state.shoppingList = shoppingList
         },
+        setOrderHistory(state, orderHistory) {
+            state.orderHistory = orderHistory
+        }
     },
 
     actions: {
@@ -102,11 +106,20 @@ const store = createStore({
             })
         },
 
-        buy(context, payload) {
-            console.log(payload);
-
+        shoppingListPost(context, payload) {
             return new Promise((resolve, reject) => {
                 axios.post("http://localhost:3000/api/buy", payload, { headers: { token: this.state.token } }).then(() => {
+                    resolve("success")
+                }).catch(error => {
+                    reject(error)
+                })
+            })
+        },
+
+        orderHistoryGet(context) {
+            return new Promise((resolve, reject) => {
+                axios.get("http://localhost:3000/api/buy", { headers: { token: this.state.token } }).then(res => {
+                    context.commit("setOrderHistory", res.data)
                     resolve("success")
                 }).catch(error => {
                     reject(error)
