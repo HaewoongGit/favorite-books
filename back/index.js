@@ -26,14 +26,6 @@ app.get("/", (req, res) => {
     res.render("./public/index.html");
 });
 
-app.get("/example", (req, res) => {
-    res.render("index");
-});
-
-app.get("/example/detail", (req, res) => {
-    res.render("detail");
-});
-
 app.listen(port, () => {
     console.log(`listening at http://localhost:${port}`);
 });
