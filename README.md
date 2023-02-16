@@ -22,10 +22,14 @@ https://docs.google.com/spreadsheets/d/1K8DpZQm5r_mVB-MjG-SsWSvIFce7Ni-Crfjz6u53
 <br>
 <br>
 ## DB 구조
+
 ![image](https://user-images.githubusercontent.com/107612118/219297281-9efe437e-d8cd-41db-b709-c33c945b461b.png)
+
 <br>
 ### buys
+
 ![image](https://user-images.githubusercontent.com/107612118/219297655-069f00c3-9150-4b45-9ead-73698dcc218b.png)
+
 ### buys
 ### buys
 ### buys
