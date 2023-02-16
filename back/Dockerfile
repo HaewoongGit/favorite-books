@@ -4,5 +4,4 @@ COPY ./package.json /favorite-books/
 RUN npm install
 
 COPY . /favorite-books/
-
 CMD npm run start
