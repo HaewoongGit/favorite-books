@@ -41,12 +41,18 @@ mongoDB는 document를 사용하기 때문에 따로 ERD를 그리진 않았습�
 
 ### buys
 ![image](https://user-images.githubusercontent.com/107612118/219297655-069f00c3-9150-4b45-9ead-73698dcc218b.png)
+<br>
+<br>
 
 ### carts
 ![image](https://user-images.githubusercontent.com/107612118/219303454-51ba8b6c-10cb-4efb-a369-37e4263b75c6.png)
+<br>
+<br>
 
 ### goods
 ![image](https://user-images.githubusercontent.com/107612118/219303572-83a431ef-805c-4392-a7ae-11e76730bd91.png)
+<br>
+<br>
 
 ### users
 ![image](https://user-images.githubusercontent.com/107612118/219303909-5a39c87f-2256-454a-8d0c-ec97c883b89f.png)
